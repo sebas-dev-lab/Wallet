@@ -29,14 +29,6 @@ const NavBar = () => {
     <div className={classes.root}>
       <AppBar position="sticky">
         <Toolbar>
-          {/* <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-          >
-            <MenuIcon />
-          </IconButton> */}
           <Link to="/singup">
             <IconButton
               edge="start"
@@ -55,10 +47,6 @@ const NavBar = () => {
               <PersonIcon />
             </IconButton>
           </Link>
-          {/* <Typography variant="h6" className={classes.title}>
-            News
-          </Typography> */}
-          {/* <Button color="inherit">Login</Button> */}
         </Toolbar>
       </AppBar>
     </div>
