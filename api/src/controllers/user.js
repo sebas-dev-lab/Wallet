@@ -4,7 +4,7 @@ const { findUser, findWallet } = require("../services/find");
 
 exports.findUser = async (req, res) => {
   try {
-    const { id } = req.userId;
+    const id = req.userId;
     const user = await findUser(id, "id");
     if (!user) {
       return res.status(404).json({ msj: "Could not be found" });

@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import { MapField } from "./mapFields.jsx";
 import Button from "@material-ui/core/Button";
 import { controlType, controlErrors } from "../../../services/auth";
+import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
-import config from "../../../services/config";
-
-const URL = config.URL + ":" + config.PORT;
+import { login, singUp } from "../../../Redux/Actions/auth.js";
 
 export const Fields = (type) => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   const [singin, setSingin] = useState({
     userName: "",
     password: "",
@@ -49,39 +52,14 @@ export const Fields = (type) => {
       !status.confirmationStatus &&
       !status.passwordStatus
     ) {
-      if (type === "login") {
-        axios
-          .get(
-            "http://localhost:4000/auth",
-            {
-              userName: singin.userName,
-              password: singin.password,
-            },
-            { withCredentials: true }
-          )
-          .then((res) => {
-            console.log(res.data);
-            setSingin({
-              userName: "",
-              password: "",
-            });
-          });
-      } else {
-        axios
-          .post(
-            "http://localhost:4000/auth",
-            { userName: register.userName, password: register.password },
-            { withCredentials: true }
-          )
-          .then((res) => {
-            console.log(res.data);
-            setRegister({
-              userName: "",
-              password: "",
-              passwordConfirmation: "",
-            });
-          });
-      }
+    }
+
+    if (type === "login") {
+      singin.userName = singin.userName.toLowerCase();
+      dispatch(login(singin.userName, singin.password, history));
+    } else {
+      register.userName = register.userName.toLowerCase();
+      dispatch(singUp(register.userName, register.password, history));
     }
   };
 

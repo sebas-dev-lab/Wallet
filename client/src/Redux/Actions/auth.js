@@ -2,9 +2,9 @@ import axios from "axios";
 import * as actionTypes from "./ActionTypes.js";
 const URL = "http://localhost:4000";
 
-export const singUp = (userName, password) => async (dispatch) => {
+export const singUp = (userName, password, history) => async (dispatch) => {
   try {
-    const data = await axios.post(
+    const { data } = await axios.post(
       `${URL}/auth`,
       {
         userName,
@@ -19,7 +19,7 @@ export const singUp = (userName, password) => async (dispatch) => {
         type: actionTypes.SINGUP_USER,
         user: data.user,
       });
-      localStorage.setItem("token", data.token);
+      history.push("/singin");
     } else {
       console.log("no se pudo registrar");
     }
@@ -32,13 +32,13 @@ export const singUp = (userName, password) => async (dispatch) => {
   }
 };
 
-export const login = (userName, password) => async (dispatch) => {
+export const login = (userName, password, history) => async (dispatch) => {
   try {
-    const data = await axios.get(
-      `${URL}/auth`,
+    const { data } = await axios.post(
+      `${URL}/auth/login`,
       {
-        userName,
-        password,
+        userName: userName,
+        password: password,
       },
       {
         withCredentials: true,
@@ -50,6 +50,7 @@ export const login = (userName, password) => async (dispatch) => {
         user: data.user,
       });
       localStorage.setItem("token", data.token);
+      history.push("/dash");
     } else {
       console.log("no se pudo loguear");
     }
@@ -64,9 +65,9 @@ export const login = (userName, password) => async (dispatch) => {
 
 export const getCurrentUser = (token) => async (dispatch) => {
   let config = {
-    headers: { Authorization: `Bearer ${token}` },
+    headers: { "x-access-token": token },
   };
-  const data = await axios.get(`${URL}/auth`, config);
+  const { data } = await axios.get(`${URL}/user`, config);
   if (data) {
     dispatch({
       type: actionTypes.CURRENT_USER,
@@ -87,10 +88,17 @@ export const verifySession = () => (dispatch) => {
   }
 };
 
-export const logout = (path) => (dispatch) => {
-  dispatch({
-    type: actionTypes.LOGOUT_USER,
-  });
-  localStorage.removeItem("token");
-  path.push("/");
+export const logout = (history) => async (dispatch) => {
+  const { token } = localStorage;
+  await axios
+    .post(`${URL}/auth/logout`, {
+      token: token,
+    })
+    .then((res) => {
+      dispatch({
+        type: actionTypes.LOGOUT_USER,
+      });
+      localStorage.removeItem("token");
+      history.push("/");
+    });
 };

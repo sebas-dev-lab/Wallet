@@ -14,7 +14,7 @@ let initialState = {
 };
 
 const authReducers = (state = initialState, action) => {
-  switch (action.typ) {
+  switch (action.type) {
     case SINGUP_USER:
       return {
         ...state,

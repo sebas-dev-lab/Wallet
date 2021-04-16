@@ -5,8 +5,8 @@ const { findUser } = require("../services/find");
 module.exports = {
   verifyFn: async (req, res, next) => {
     try {
-      const { id } = req.params;
       const token = req.headers["x-access-token"];
+      console.log(token);
       if (!token) {
         return res.status(401).json({
           auth: false,
@@ -18,8 +18,8 @@ module.exports = {
         return res.status(401).json({ msj: "Can not logged" });
       }
 
-      const user = await findUser(id, "id");
-      req.userId = id;
+      req.userId = decoded.id;
+      const user = await findUser(req.userId, "id");
       if (!user)
         return res.status(404).json({ msj: "User could not be found" });
 

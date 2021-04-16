@@ -2,13 +2,15 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import PersonIcon from "@material-ui/icons/Person";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../../Redux/Actions/auth";
+import { useHistory } from "react-router-dom";
+import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,31 +24,52 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NavBar = () => {
+const NavBar = ({ type }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const logoutUser = () => {
+    dispatch(logout(history));
+  };
 
   return (
     <div className={classes.root}>
       <AppBar position="sticky">
         <Toolbar>
-          <Link to="/singup">
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              aria-label="menu"
-            >
-              <PersonAddIcon />
-            </IconButton>
-          </Link>
-          <Link to="/singin">
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              aria-label="menu"
-            >
-              <PersonIcon />
-            </IconButton>
-          </Link>
+          {!type ? (
+            <>
+              <Link to="/singin">
+                <IconButton
+                  edge="start"
+                  className={classes.menuButton}
+                  aria-label="menu"
+                >
+                  <PersonIcon />
+                </IconButton>
+              </Link>
+              <Link to="/singup">
+                <IconButton
+                  edge="start"
+                  className={classes.menuButton}
+                  aria-label="menu"
+                >
+                  <PersonAddIcon />
+                </IconButton>
+              </Link>
+            </>
+          ) : (
+            <>
+              <Button onClick={logoutUser}>
+                <IconButton
+                  edge="start"
+                  className={classes.menuButton}
+                  aria-label="menu"
+                />
+                <ExitToAppIcon />
+              </Button>
+            </>
+          )}
         </Toolbar>
       </AppBar>
     </div>

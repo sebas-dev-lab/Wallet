@@ -6,6 +6,7 @@ const config = require("./config");
 
 // Import routes
 const router = require("./src/routes/index.js");
+const { uniqueDB } = require("./src/services/ttl");
 
 // Server
 const app = express();
@@ -23,6 +24,9 @@ app.use(
     origin: "http://localhost:3000",
   })
 );
+
+// Create unique TTL
+uniqueDB();
 
 // Routes
 app.use(router);

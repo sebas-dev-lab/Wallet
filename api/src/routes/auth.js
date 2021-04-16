@@ -9,6 +9,9 @@ const authControllers = require("../controllers/auth");
 router.post("/", verifyUserName, authControllers.singUp);
 
 // Login
-router.get("/", authControllers.login);
+router.post("/login", authControllers.login);
+
+// Logout
+router.post("/logout", authControllers.logout);
 
 module.exports = router;
