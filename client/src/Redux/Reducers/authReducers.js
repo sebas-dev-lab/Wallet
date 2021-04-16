@@ -50,6 +50,8 @@ const authReducers = (state = initialState, action) => {
         ...state,
         message: action.message,
       };
+    default:
+      return state;
   }
 };
 
