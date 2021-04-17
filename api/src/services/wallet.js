@@ -10,7 +10,8 @@ module.exports = {
     });
     let total_1 = sum;
     let total_2 = sum / 1000000000000000;
-    return { total_1, total_2 };
+
+    return { total_1, total_2, data: data.result };
   },
   resolvePath: (coins) => {
     const url = config.APIETH;

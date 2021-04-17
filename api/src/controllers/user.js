@@ -1,6 +1,10 @@
+// ** SCHEMA IMPORT
 const User = require("../models/users");
 const Wallet = require("../models/wallet");
+
+// ** FUNCTIONS SERVICE IMPORT
 const { findUser, findWallet } = require("../services/find");
+const { balance, resolvePath } = require("../services/wallet");
 
 exports.findUser = async (req, res) => {
   try {
@@ -9,7 +13,10 @@ exports.findUser = async (req, res) => {
     if (!user) {
       return res.status(404).json({ msj: "Could not be found" });
     }
-    return res.status(200).json({ msj: "ok", user });
+    let coins = user.wallet.wallet_coin;
+    let pathReconstruct = resolvePath(coins);
+    const total = await balance(pathReconstruct);
+    return res.status(200).json({ msj: "ok", user, total });
   } catch (e) {
     console.error(e);
   }

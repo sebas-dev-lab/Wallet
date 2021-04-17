@@ -48,6 +48,7 @@ export const login = (userName, password, history) => async (dispatch) => {
       dispatch({
         type: actionTypes.LOGIN_USER,
         user: data.user,
+        total: data.total,
       });
       localStorage.setItem("token", data.token);
       history.push("/dash");
@@ -63,28 +64,33 @@ export const login = (userName, password, history) => async (dispatch) => {
   }
 };
 
-export const getCurrentUser = (token) => async (dispatch) => {
+export const getCurrentUser = (token, history) => async (dispatch) => {
   let config = {
     headers: { "x-access-token": token },
   };
   const { data } = await axios.get(`${URL}/user`, config);
-  if (data) {
+  if (data && data.type !== "expired") {
     dispatch({
       type: actionTypes.CURRENT_USER,
       user: data.user,
+      total: data.total,
     });
+  } else if (!data || data.type === "expired") {
+    localStorage.removeItem("token");
+    history.push("/");
   }
 };
 
-export const verifySession = () => (dispatch) => {
+export const verifySession = (history) => (dispatch) => {
   const { token } = localStorage;
   if (token) {
-    dispatch(getCurrentUser(token));
+    dispatch(getCurrentUser(token, history));
   } else {
     dispatch({
       type: actionTypes.NOT_CURRENT_USER,
       message: "No hay un usuario logueado.",
     });
+    history.push("/");
   }
 };
 

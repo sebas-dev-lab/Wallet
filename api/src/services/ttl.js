@@ -6,6 +6,7 @@ module.exports = {
     const date = new Date();
     let today = date.toLocaleDateString();
     let exists;
+
     for (let i in ttl) {
       if (ttl[i].date === today) {
         exists = true;

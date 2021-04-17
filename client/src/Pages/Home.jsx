@@ -3,6 +3,7 @@ import NavBar from "../Components/NavBar";
 import Visitors from "../Components/Visitors";
 import { useSelector, useDispatch } from "react-redux";
 import { verifySession } from "../Redux/Actions/auth";
+import { useHistory } from "react-router-dom";
 
 const nav_type = {
   not: false,
@@ -11,12 +12,12 @@ const nav_type = {
 
 const Home = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const data = useSelector((state) => state.auth.user);
 
   useEffect(() => {
-    dispatch(verifySession());
+    dispatch(verifySession(history));
   }, []);
-  console.log(data);
   let nav = false;
   if (data.userName) {
     nav = nav_type.ok;

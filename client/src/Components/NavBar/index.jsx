@@ -11,6 +11,8 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../Redux/Actions/auth";
 import { useHistory } from "react-router-dom";
 import { Button } from "@material-ui/core";
+import HomeIcon from "@material-ui/icons/Home";
+import DashboardIcon from "@material-ui/icons/Dashboard";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -68,8 +70,27 @@ const NavBar = ({ type }) => {
                 />
                 <ExitToAppIcon />
               </Button>
+              <Link to="/dash">
+                <IconButton
+                  edge="start"
+                  className={classes.menuButton}
+                  aria-label="menu"
+                >
+                  <DashboardIcon />
+                </IconButton>
+              </Link>
             </>
           )}
+          <Link to="/">
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              aria-label="menu"
+            >
+              <HomeIcon />
+            </IconButton>
+          </Link>
+          {}
         </Toolbar>
       </AppBar>
     </div>

@@ -16,6 +16,9 @@ const userSchema = new Schema({
     ref: "Wallet",
     autopopulate: true,
   },
+  tokenExpired: {
+    type: [String],
+  },
 });
 
 userSchema.plugin(require("mongoose-autopopulate"));

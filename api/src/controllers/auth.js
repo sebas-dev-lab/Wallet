@@ -1,9 +1,11 @@
+// ** SCHEMAS IMPORT
 const User = require("../models/users");
-const { findUser } = require("../services/find");
 const Wallet = require("../models/wallet");
-const { createToken } = require("../services/auth");
+
+// **FUNTIONS SERVICES IMPORT
+const { findUser } = require("../services/find");
+const { createToken, saveTokenExpired } = require("../services/auth");
 const { balance, resolvePath } = require("../services/wallet");
-const TTL = require("../models/TTL");
 
 exports.singUp = async (req, res) => {
   try {
@@ -62,50 +64,32 @@ exports.login = async (req, res) => {
 
     let coins = user.wallet.wallet_coin;
     let pathReconstruct = resolvePath(coins);
-    const { total_1, total_2 } = await balance(pathReconstruct);
+    const total = await balance(pathReconstruct);
 
     const token = createToken(user);
 
     return res
       .status(200)
-      .json({ msj: "ok", auth: true, token, user: user, total_1, total_2 });
+      .json({ msj: "ok", auth: true, token, user: user, total });
   } catch (e) {
     console.error(e);
     return res.status(500).json({ msj: "Server error" });
   }
 };
 
-exports.logout = (req, res) => {
-  const { token } = req.body;
-  console.log(token);
-  if (!token) {
-    return res.status(404).json({ msj: "required token" });
+exports.logout = async (req, res) => {
+  try {
+    const { token } = req.body;
+    if (!token) {
+      return res.status(404).json({ msj: "required token" });
+    }
+    const { userStatus, tokenStatus } = await saveTokenExpired(token);
+    if (!userStatus || !tokenStatus) {
+      return res.status(400).json({ msj: "could not be loguot" });
+    }
+    return res.status(200).json({ msj: "ok logout" });
+  } catch (e) {
+    console.log(e);
+    res.json({ msj: "error", type: "expired", auth: false });
   }
-  TTL.find().then(async (ttl) => {
-    let control_1;
-    ttl[0].restricted_token.forEach((item) => {
-      if (item === token) {
-        control_1 = true;
-      }
-      return false;
-    });
-    if (control_1) {
-      return res.status(404).json({ msj: "token already exists" });
-    }
-    ttl[0].restricted_token.push(token);
-    await ttl[0].save();
-    const control = await TTL.find();
-    let token_i;
-    control[0].restricted_token.forEach((tok) => {
-      if (tok === token) {
-        token_i = true;
-      } else {
-        token_i = false;
-      }
-    });
-    if (!token_i) {
-      return res.status(404).json({ msj: "token was not saved" });
-    }
-    return res.status(200).json({ msj: "logout ok" });
-  });
 };

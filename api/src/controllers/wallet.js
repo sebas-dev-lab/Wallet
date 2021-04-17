@@ -1,4 +1,7 @@
+// ** SCHEMAS IMPORT
 const Wallet = require("../models/wallet");
+
+// ** FUNCTION SERVICE IMPORT
 const { findWallet } = require("../services/find");
 
 exports.postWallet = async (req, res) => {

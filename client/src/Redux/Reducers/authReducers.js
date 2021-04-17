@@ -10,6 +10,7 @@ import {
 
 let initialState = {
   user: {},
+  total: 0,
   message: "",
 };
 
@@ -24,11 +25,13 @@ const authReducers = (state = initialState, action) => {
       return {
         ...state,
         user: action.user,
+        total: action.total,
       };
     case CURRENT_USER:
       return {
         ...state,
         user: action.user,
+        total: action.total,
       };
     case NOT_CURRENT_USER:
       return {

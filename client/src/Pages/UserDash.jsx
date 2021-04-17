@@ -2,14 +2,14 @@ import React from "react";
 import DashUser from "../Components/DashUser";
 import NavBar from "../Components/NavBar";
 
-const UserDash = () => {
+const UserDash = ({ user, coins }) => {
   let nav = "dash";
 
   return (
     <>
       {" "}
       <NavBar type={nav} />
-      <DashUser />;
+      <DashUser user={user} coins={coins} />
     </>
   );
 };

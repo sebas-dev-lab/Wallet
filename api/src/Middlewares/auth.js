@@ -1,31 +1,33 @@
-const jwt = require("jsonwebtoken");
-const config = require("../../config");
+// ** FUNTION SERVICE IMPORT
+const { controlLog } = require("../services/auth");
 const { findUser } = require("../services/find");
 
 module.exports = {
   verifyFn: async (req, res, next) => {
     try {
       const token = req.headers["x-access-token"];
-      console.log(token);
       if (!token) {
         return res.status(401).json({
           auth: false,
           msj: "Have not got token",
         });
       }
-      const decoded = jwt.verify(token, config.SECRET);
-      if (!decoded) {
-        return res.status(401).json({ msj: "Can not logged" });
+      const {
+        userId,
+        expiredTimeControl,
+        userStatus,
+        finalControl,
+        error,
+      } = await controlLog(token);
+      if (error || expiredTimeControl || finalControl || userStatus) {
+        return res
+          .status(203)
+          .json({ msj: "Login error", auth: false, type: "expired" });
       }
-
-      req.userId = decoded.id;
-      const user = await findUser(req.userId, "id");
-      if (!user)
-        return res.status(404).json({ msj: "User could not be found" });
-
+      req.userId = userId;
       next();
     } catch (e) {
-      console.error(e);
+      res.json({ auth: false, type: "expired" });
     }
   },
   verifyUserName: async (req, res, next) => {

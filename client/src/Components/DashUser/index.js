@@ -1,13 +1,11 @@
 import React from "react";
+import GridDash from "./data/grid";
 
-const DashUser = () => {
+const DashUser = ({ user, coins }) => {
   return (
-    <div>
-      <p>
-        Página destinada a usuarios logueados. Debería contener un Dashboard con
-        datos del wallet
-      </p>
-    </div>
+    <>
+      <GridDash user={user} coins={coins} />
+    </>
   );
 };
 

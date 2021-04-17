@@ -26,7 +26,7 @@ app.use(
 );
 
 // Create unique TTL
-uniqueDB();
+// uniqueDB();
 
 // Routes
 app.use(router);
