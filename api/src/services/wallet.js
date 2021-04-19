@@ -5,7 +5,8 @@ module.exports = {
   balance: async (APIREC) => {
     const { data } = await axios.get(APIREC);
     let sum = 0;
-    if (data.length > 0) {
+    console.log(data);
+    if (data.result.length > 0) {
       data.result.forEach((item) => {
         sum = sum + item.balance;
       });
