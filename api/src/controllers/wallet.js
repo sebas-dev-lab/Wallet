@@ -6,20 +6,21 @@ const { findWallet, findUser } = require("../services/find");
 
 exports.postWallet = async (req, res) => {
   try {
+    const { wallet_name, wallet_coint } = req.body;
     const user = await findUser(req.userId, "id");
 
     const neWallet = new Wallet({
-      wallet_name: `ETH`,
-      wallet_coint: "0x4de921237198b305d6d46a9f8c41a87625dfa6dc",
+      wallet_name: wallet_name,
+      wallet_coint: wallet_coint,
     });
 
     await neWallet.save();
-    const wallet = await findWallet(`ETH`, "wallet_name");
+    const wallet = await findWallet(wallet_name, "wallet_name");
     if (!wallet) {
       return res.status(404).json({ msj: "Could not be crated" });
     }
 
-    user.wallet = wallet;
+    user.wallet.push(wallet);
     await user.save();
 
     return res.status(201).json({ msj: "ok", wallet: wallet });
@@ -32,14 +33,10 @@ exports.postWallet = async (req, res) => {
 exports.getWallet = async (req, res) => {
   try {
     const user = await findUser(req.userId, "id");
-    if (!user.wallet) {
+    if (user.wallet.length === 0) {
       return res.status(404).json({ msj: "user have not got wallet" });
     }
-    const wallet_id = user.wallet._id;
-    const wallet = await findWallet(wallet_id, "id");
-    if (!wallet) {
-      return res.status(404).json({ msj: "Wallet could not be found" });
-    }
+    const wallet = user.wallet;
     return res.status(200).json({ msj: "ok", wallet: wallet });
   } catch (e) {
     console.error(e);

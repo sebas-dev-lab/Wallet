@@ -4,7 +4,11 @@ const User = require("../models/users");
 
 // **FUNTIONS SERVICES IMPORT
 const { findUser } = require("../services/find");
-const { createToken, saveTokenExpired } = require("../services/auth");
+const {
+  createToken,
+  saveTokenExpired,
+  uniqueCoinsArr,
+} = require("../services/auth");
 const { balance, resolvePath } = require("../services/wallet");
 
 exports.singUp = async (req, res) => {
@@ -47,7 +51,6 @@ exports.singUp = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { userName, password } = req.body;
-    console.log(userName, password);
     if (!userName || !password) {
       return res.status(404).json({ msj: "Data required" });
     }
@@ -63,10 +66,9 @@ exports.login = async (req, res) => {
     }
     let total;
     let walletMsj = "ok";
-    console.log(user.wallet);
-    if (user.wallet) {
-      let coins = user.wallet.wallet_coin;
-      let pathReconstruct = resolvePath(coins);
+    if (user.wallet.length > 0) {
+      let coins = user.wallet;
+      let pathReconstruct = resolvePath(uniqueCoinsArr(coins));
       total = await balance(pathReconstruct);
     }
     if (!total) {

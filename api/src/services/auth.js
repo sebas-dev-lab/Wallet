@@ -33,6 +33,19 @@ module.exports = {
       tokenStatus,
     };
   },
+  uniqueCoinsArr: (coins) => {
+    let w_coin = [];
+    coins.forEach((bill) => {
+      w_coin.push(bill.wallet_coin);
+    });
+    let unique_arr_coin = [];
+    for (let i in w_coin) {
+      for (let j in w_coin[i]) {
+        unique_arr_coin.push(w_coin[i][j]);
+      }
+    }
+    return unique_arr_coin;
+  },
   controlLog: async (token) => {
     try {
       const decoded = jwt.verify(token, config.SECRET);

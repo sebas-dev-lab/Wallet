@@ -14,6 +14,7 @@ module.exports = {
     return { total_1, total_2, data: data.result };
   },
   resolvePath: (coins) => {
+    console.log(coins);
     const url = config.APIETH;
     let concat = [];
     let i = 0;

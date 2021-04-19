@@ -12,7 +12,7 @@ const userSchema = new Schema({
     required: true,
   },
   wallet: {
-    type: Schema.Types.ObjectId,
+    type: [Schema.Types.ObjectId],
     ref: "Wallet",
     autopopulate: true,
   },

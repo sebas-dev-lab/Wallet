@@ -1,6 +1,7 @@
 // ** SCHEMA IMPORT
 const User = require("../models/users");
 const Wallet = require("../models/wallet");
+const { uniqueCoinsArr } = require("../services/auth");
 
 // ** FUNCTIONS SERVICE IMPORT
 const { findUser, findWallet } = require("../services/find");
@@ -11,7 +12,6 @@ exports.findUser = async (req, res) => {
     let id;
     if (!req.userId) {
       id = req.params.id;
-      console.log(id);
     } else {
       id = req.userId;
     }
@@ -19,10 +19,15 @@ exports.findUser = async (req, res) => {
     if (!user) {
       return res.status(404).json({ msj: "Could not be found" });
     }
-    let coins = user.wallet.wallet_coin;
-    let pathReconstruct = resolvePath(coins);
-    const total = await balance(pathReconstruct);
-    return res.status(200).json({ msj: "ok", user, total });
+    let total;
+    let walletMsj = "No";
+    if (user.wallet.length > 0) {
+      let coins = user.wallet;
+      let pathReconstruct = resolvePath(uniqueCoinsArr(coins));
+      total = await balance(pathReconstruct);
+      walletMsj = "ok";
+    }
+    return res.status(200).json({ msj: "ok", user, total, walletMsj });
   } catch (e) {
     console.error(e);
   }
@@ -35,13 +40,15 @@ exports.deleteUser = async (req, res) => {
     if (!user) {
       return res.status(404).json({ msj: "Could not be found" });
     }
-    const wallet_id = user.wallet._id;
+    const wallet_id = user.wallet;
+    wallet_id.forEach(async (bill) => {
+      let id = bill._id;
+      await Wallet.deleteOne({ _id: id });
+    });
     await User.deleteOne({ _id: id });
-    await Wallet.deleteOne({ _id: wallet_id });
     const control = await findUser(id, "id");
-    const control_2 = await findWallet(wallet_id, "id");
-    if (control && control_2) {
-      return res.status(404).json({ msj: "Could not be found" });
+    if (control) {
+      return res.status(404).json({ msj: "Could not be deleted" });
     }
     return res.status(200).json({ msj: "ok" });
   } catch (e) {
