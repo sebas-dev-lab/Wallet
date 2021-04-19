@@ -19,6 +19,7 @@ exports.findUser = async (req, res) => {
     if (!user) {
       return res.status(404).json({ msj: "Could not be found" });
     }
+
     let total;
     let walletMsj = "No";
     if (user.wallet.length > 0) {
@@ -27,7 +28,13 @@ exports.findUser = async (req, res) => {
       total = await balance(pathReconstruct);
       walletMsj = "ok";
     }
-    return res.status(200).json({ msj: "ok", user, total, walletMsj });
+    const send_user = {
+      id: user._id,
+      wallet: user.wallet,
+      total: total,
+      walletMsj,
+    };
+    return res.status(200).json({ msj: "ok", send_user });
   } catch (e) {
     console.error(e);
   }

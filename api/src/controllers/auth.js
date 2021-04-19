@@ -61,21 +61,10 @@ exports.login = async (req, res) => {
         .status(401)
         .json({ auth: false, token: null, msj: "Password incorrect" });
     }
-    let total;
-    let walletMsj = "ok";
-    if (user.wallet.length > 0) {
-      let coins = user.wallet;
-      let pathReconstruct = resolvePath(uniqueCoinsArr(coins));
-      total = await balance(pathReconstruct);
-    }
-    if (!total) {
-      walletMsj = "Have not wallet";
-    }
+
     const token = createToken(user);
 
-    return res
-      .status(200)
-      .json({ msj: "ok", auth: true, token, total, walletMsj });
+    return res.status(200).json({ msj: "ok", auth: true, token });
   } catch (e) {
     console.error(e);
     return res.status(500).json({ msj: "Server error" });
