@@ -1,6 +1,6 @@
 // ** SCHEMAS IMPORT
 const User = require("../models/users");
-const Wallet = require("../models/wallet");
+// const Wallet = require("../models/wallet");
 
 // **FUNTIONS SERVICES IMPORT
 const { findUser } = require("../services/find");
@@ -14,21 +14,21 @@ exports.singUp = async (req, res) => {
       return res.status(404).josn({ msj: "Data required" });
     }
 
-    const newWallet = new Wallet({
-      wallet_name: "ETH",
-      wallet_coin: [
-        "0x4de921237198b305d6d46a9f8c41a87625dfa6dc",
-        "0x73c26dd2a28dd303aa2b9f339c664246e6331d8b",
-      ],
-    });
+    // const newWallet = new Wallet({
+    //   wallet_name: "ETH",
+    //   wallet_coin: [
+    //     "0x4de921237198b305d6d46a9f8c41a87625dfa6dc",
+    //     "0x73c26dd2a28dd303aa2b9f339c664246e6331d8b",
+    //   ],
+    // });
 
     const newUser = new User({
       userName,
       password,
-      wallet: newWallet,
+      // wallet: newWallet,
     });
     newUser.password = await newUser.encrypt(password);
-    await newWallet.save();
+    // await newWallet.save();
     await newUser.save();
     const user = await User.findOne({ userName: userName });
     if (!user) {
@@ -61,16 +61,22 @@ exports.login = async (req, res) => {
         .status(401)
         .json({ auth: false, token: null, msj: "Password incorrect" });
     }
-
-    let coins = user.wallet.wallet_coin;
-    let pathReconstruct = resolvePath(coins);
-    const total = await balance(pathReconstruct);
-
+    let total;
+    let walletMsj = "ok";
+    console.log(user.wallet);
+    if (user.wallet) {
+      let coins = user.wallet.wallet_coin;
+      let pathReconstruct = resolvePath(coins);
+      total = await balance(pathReconstruct);
+    }
+    if (!total) {
+      walletMsj = "Have not wallet";
+    }
     const token = createToken(user);
 
     return res
       .status(200)
-      .json({ msj: "ok", auth: true, token, user: user, total });
+      .json({ msj: "ok", auth: true, token, user: user, total, walletMsj });
   } catch (e) {
     console.error(e);
     return res.status(500).json({ msj: "Server error" });

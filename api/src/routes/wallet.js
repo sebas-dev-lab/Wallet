@@ -2,10 +2,11 @@ const router = require("express").Router();
 
 // Import controllers
 const walletControllers = require("../controllers/wallet");
+const { verifyFn } = require("../Middlewares/auth");
 
 // Routes
-router.post("/", walletControllers.postWallet);
+router.post("/", verifyFn, walletControllers.postWallet);
 // data
-router.get("/:id", walletControllers.getWallet);
+router.get("/", verifyFn, walletControllers.getWallet);
 
 module.exports = router;

@@ -8,7 +8,13 @@ const { balance, resolvePath } = require("../services/wallet");
 
 exports.findUser = async (req, res) => {
   try {
-    const id = req.userId;
+    let id;
+    if (!req.userId) {
+      id = req.params.id;
+      console.log(id);
+    } else {
+      id = req.userId;
+    }
     const user = await findUser(id, "id");
     if (!user) {
       return res.status(404).json({ msj: "Could not be found" });
