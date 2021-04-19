@@ -5,9 +5,11 @@ module.exports = {
   balance: async (APIREC) => {
     const { data } = await axios.get(APIREC);
     let sum = 0;
-    data.result.forEach((item) => {
-      sum = sum + item.balance;
-    });
+    if (data.length > 0) {
+      data.result.forEach((item) => {
+        sum = sum + item.balance;
+      });
+    }
     let total_1 = sum;
     let total_2 = sum / 1000000000000000;
 
