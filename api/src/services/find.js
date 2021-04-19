@@ -19,8 +19,8 @@ module.exports = {
   findWallet: async (item, type) => {
     let find_item;
     switch (type) {
-      case "wallet_name":
-        find_item = await Wallet.findOne({ wallet_name: item });
+      case "wallet_coint":
+        find_item = await Wallet.findOne({ wallet_coin: item });
         return find_item;
       case "id":
         find_item = await Wallet.findOne({ _id: item });
