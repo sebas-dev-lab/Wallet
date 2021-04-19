@@ -27,7 +27,7 @@ exports.postWallet = async (req, res) => {
 
     const findUser_wallet = await findUser(req.userId, "id");
 
-    return res.status(201).json({ msj: "ok", wallet: findUser_wallet });
+    return res.status(201).json({ msj: "ok", wallet: findUser_wallet.wallet });
   } catch (e) {
     console.error(e);
     return res.status(500).json({ msj: "Server error" });
