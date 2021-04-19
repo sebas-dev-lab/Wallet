@@ -38,10 +38,7 @@ exports.singUp = async (req, res) => {
     if (!user) {
       return res.status(400).json({ msj: "User could not be created" });
     }
-    const token = createToken(user);
-    return res
-      .status(201)
-      .json({ msj: "ok", auth: true, token: token, user: user });
+    return res.status(201).json({ msj: "ok", auth: true });
   } catch (e) {
     console.error(e);
     return res.status(500).json({ msj: "Server error" });
@@ -78,7 +75,7 @@ exports.login = async (req, res) => {
 
     return res
       .status(200)
-      .json({ msj: "ok", auth: true, token, user: user, total, walletMsj });
+      .json({ msj: "ok", auth: true, token, total, walletMsj });
   } catch (e) {
     console.error(e);
     return res.status(500).json({ msj: "Server error" });
