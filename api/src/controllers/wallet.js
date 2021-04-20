@@ -3,12 +3,20 @@ const Wallet = require("../models/wallet");
 
 // ** FUNCTION SERVICE IMPORT
 const { findWallet, findUser } = require("../services/find");
+const { verifyCoins, resolvePath } = require("../services/wallet");
 
 exports.postWallet = async (req, res) => {
   try {
     const { wallet_name, wallet_coint } = req.body;
     const user = await findUser(req.userId, "id");
-    console.log(wallet_name, wallet_coint);
+
+    let coin = [];
+    coin.push(wallet_coint);
+    const path = resolvePath(coin);
+    const controlWallet = await verifyCoins(path);
+    if (controlWallet === false) {
+      return res.status(404).json({ msj: "Not exist", walletVerify: false });
+    }
     const neWallet = new Wallet({
       wallet_name: wallet_name,
       wallet_coin: wallet_coint,
@@ -26,7 +34,9 @@ exports.postWallet = async (req, res) => {
 
     const findUser_wallet = await findUser(req.userId, "id");
 
-    return res.status(201).json({ msj: "ok", wallet: findUser_wallet.wallet });
+    return res
+      .status(201)
+      .json({ msj: "ok", wallet: findUser_wallet.wallet, walletVerify: true });
   } catch (e) {
     console.error(e);
     return res.status(500).json({ msj: "Server error" });

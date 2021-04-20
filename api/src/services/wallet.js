@@ -17,15 +17,18 @@ module.exports = {
     return { total_1, total_2, data: data.result };
   },
   resolvePath: (coins) => {
-    console.log(coins);
     const url = config.APIETH;
     let concat = [];
     let i = 0;
-    while (i < coins.length - 1) {
-      concat.push(coins[i] + ",");
-      i++;
-      if (i === coins.length - 1) {
-        concat.push(coins[i]);
+    if (coins.length === 1) {
+      concat = coins;
+    } else if (coins.length > 1) {
+      while (i < coins.length - 1) {
+        concat.push(coins[i] + ",");
+        i++;
+        if (i === coins.length - 1) {
+          concat.push(coins[i]);
+        }
       }
     }
     const apiRec =
@@ -35,5 +38,13 @@ module.exports = {
       "&tag=latest&apikey=869Z76H93375IKC5FXRE2NEEZZTIE3GQ6H";
 
     return apiRec;
+  },
+  verifyCoins: async (path) => {
+    const { data } = await axios.get(path);
+    if (data.status === "1") {
+      return true;
+    } else {
+      return false;
+    }
   },
 };
