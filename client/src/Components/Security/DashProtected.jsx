@@ -6,20 +6,18 @@ import { verifySession } from "../../Redux/Actions/auth";
 const ProtectedAdminRoute = ({ component: Component, ...rest }) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const data = useSelector((store) => store.auth);
-  let user = data.user;
+  const user = useSelector((store) => store.auth.user);
   let coins = [];
   if (Object.keys(user).length > 0) {
-    for (let j in data.total.data) {
-      coins.push(data.total.data[j]);
+    if (user.walletMsj === "ok") {
+      for (let j in user.total.data) {
+        coins.push(user.total.data[j]);
+      }
     }
   }
-
-  user.total = data.total.total_2;
   useEffect(() => {
     dispatch(verifySession(history));
   }, []);
-
   if (user) {
     return (
       <Route

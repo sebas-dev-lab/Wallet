@@ -15,6 +15,7 @@ export const singUp = (userName, password, history) => async (dispatch) => {
       }
     );
     if (data) {
+      console.log(data);
       dispatch({
         type: actionTypes.SINGUP_USER,
         user: data.user,
@@ -45,10 +46,10 @@ export const login = (userName, password, history) => async (dispatch) => {
       }
     );
     if (data) {
+      dispatch(getCurrentUser(data.token, history));
       dispatch({
         type: actionTypes.LOGIN_USER,
-        user: data.user,
-        total: data.total,
+        message: "ok",
       });
       localStorage.setItem("token", data.token);
       history.push("/dash");
@@ -69,11 +70,11 @@ export const getCurrentUser = (token, history) => async (dispatch) => {
     headers: { "x-access-token": token },
   };
   const { data } = await axios.get(`${URL}/user`, config);
+
   if (data && data.type !== "expired") {
     dispatch({
       type: actionTypes.CURRENT_USER,
-      user: data.user,
-      total: data.total,
+      user: data.send_user,
     });
   } else if (!data || data.type === "expired") {
     localStorage.removeItem("token");

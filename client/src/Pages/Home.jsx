@@ -14,12 +14,12 @@ const Home = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const data = useSelector((state) => state.auth.user);
-
   useEffect(() => {
     dispatch(verifySession(history));
   }, []);
   let nav = false;
-  if (data.userName) {
+
+  if (data.id) {
     nav = nav_type.ok;
   }
   return (

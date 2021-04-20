@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
+import NotWallet from "../NotWallet";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,19 +26,21 @@ const useStyles = makeStyles((theme) => ({
 
 const GridDash = ({ user, coins }) => {
   const classes = useStyles();
-
+  console.log(user, "****", coins);
   let estructure = ["Id", "Wallet", "Balance"];
   return (
     <div className={classes.root}>
       <Grid container spacing={5}>
-        {estructure.map((item) => {
-          return (
-            <Grid item xs={4}>
-              <Paper className={classes.paper}>{item}</Paper>
-            </Grid>
-          );
-        })}
-        {coins
+        {coins.length > 0
+          ? estructure.map((item) => {
+              return (
+                <Grid item xs={4}>
+                  <Paper className={classes.paper}>{item}</Paper>
+                </Grid>
+              );
+            })
+          : null}
+        {coins.length > 0
           ? coins.map((item, idx) => {
               return (
                 <>
@@ -58,18 +61,20 @@ const GridDash = ({ user, coins }) => {
               );
             })
           : null}
-        {coins ? (
+        {user.walletMsj === "ok" ? (
           <>
             <Grid item xs={6}>
               <Paper className={classes.paper}>Total</Paper>
             </Grid>
             <Grid item xs={6}>
               <Paper className={classes.paper}>
-                {Math.floor(user.total / (1000000 * 1000000))}
+                {Math.floor(user.total.total_2 / (1000000 * 1000000))}
               </Paper>
             </Grid>
           </>
-        ) : null}
+        ) : (
+          <NotWallet />
+        )}
       </Grid>
     </div>
   );

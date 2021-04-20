@@ -14,6 +14,7 @@ const { balance, resolvePath } = require("../services/wallet");
 exports.singUp = async (req, res) => {
   try {
     const { userName, password } = req.body;
+    console.log(userName, password);
     if (!userName || !password) {
       return res.status(404).josn({ msj: "Data required" });
     }

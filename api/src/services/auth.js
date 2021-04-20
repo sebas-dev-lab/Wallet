@@ -48,6 +48,7 @@ module.exports = {
   },
   controlLog: async (token) => {
     try {
+      console.log(token);
       const decoded = jwt.verify(token, config.SECRET);
       const userId = decoded.id;
       const timeToExp = new Date().getTime() / 1000;

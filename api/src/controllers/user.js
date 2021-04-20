@@ -22,11 +22,13 @@ exports.findUser = async (req, res) => {
 
     let total;
     let walletMsj = "No";
-    if (user.wallet.length > 0) {
+    if (user.wallet) {
       let coins = user.wallet;
-      let pathReconstruct = resolvePath(uniqueCoinsArr(coins));
-      total = await balance(pathReconstruct);
-      walletMsj = "ok";
+      if (coins.length > 0) {
+        let pathReconstruct = resolvePath(uniqueCoinsArr(coins));
+        total = await balance(pathReconstruct);
+        walletMsj = "ok";
+      }
     }
     const send_user = {
       id: user._id,
@@ -34,6 +36,7 @@ exports.findUser = async (req, res) => {
       total: total,
       walletMsj,
     };
+    console.log(send_user);
     return res.status(200).json({ msj: "ok", send_user });
   } catch (e) {
     console.error(e);
