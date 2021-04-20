@@ -17,11 +17,26 @@ exports.postWallet = async (req, res) => {
     if (controlWallet === false) {
       return res
         .status(206)
-        .json({ msj: "Wallet does not exist", walletVerify: false });
+        .json({
+          msj: "Wallet does not exist",
+          walletVerify: false,
+          exist: fasle,
+        });
     }
+
+    const walletControUser = await findWallet(wallet_coint, "wallet_coint");
+    if (walletControUser) {
+      return res.status(206).json({
+        msj: "Wallet exist with other user",
+        walletVerify: false,
+        exist: true,
+      });
+    }
+
     const neWallet = new Wallet({
       wallet_name: wallet_name,
       wallet_coin: wallet_coint,
+      user_id: req.userId,
     });
 
     await neWallet.save();
@@ -36,9 +51,11 @@ exports.postWallet = async (req, res) => {
 
     const findUser_wallet = await findUser(req.userId, "id");
 
-    return res
-      .status(201)
-      .json({ msj: "ok", wallet: findUser_wallet.wallet, walletVerify: true });
+    return res.status(201).json({
+      msj: "ok",
+      wallet: findUser_wallet.wallet,
+      walletVerify: true,
+    });
   } catch (e) {
     console.error(e);
     return res.status(500).json({ msj: "Server error" });

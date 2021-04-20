@@ -21,7 +21,6 @@ export const addWallet = (wallet_name, wallet_coint, history) => async (
       },
       config
     );
-    console.log(data);
     if (data.walletVerify === true) {
       dispatch(getCurrentUser(token, history));
       dispatch({
@@ -30,7 +29,12 @@ export const addWallet = (wallet_name, wallet_coint, history) => async (
       });
       walletAlert("ok");
     } else if (data.walletVerify === false) {
-      walletAlert("error");
+      if (data.exist === true) {
+        walletAlert("error", "exist");
+        return;
+      } else {
+        walletAlert("error");
+      }
     }
   } catch (e) {
     console.error(e);

@@ -7,6 +7,10 @@ const walletSchema = new Schema({
   wallet_coin: {
     type: [String],
   },
+  user_id: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 const Wallet = model("Wallet", walletSchema);
