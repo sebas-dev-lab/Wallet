@@ -19,8 +19,11 @@ const Home = () => {
   }, []);
   let nav = false;
 
-  if (data.id) {
-    nav = nav_type.ok;
+  console.log(data);
+  if (data) {
+    if (data.id) {
+      nav = nav_type.ok;
+    }
   }
   return (
     <>

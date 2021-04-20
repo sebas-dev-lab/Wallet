@@ -4,7 +4,6 @@ import Button from "@material-ui/core/Button";
 import { controlType, controlErrors } from "../../../services/auth";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import axios from "axios";
 import { login, singUp } from "../../../Redux/Actions/auth.js";
 
 export const Fields = (type) => {

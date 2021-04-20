@@ -8,10 +8,12 @@ const ProtectedAdminRoute = ({ component: Component, ...rest }) => {
   const history = useHistory();
   const user = useSelector((store) => store.auth.user);
   let coins = [];
-  if (Object.keys(user).length > 0) {
-    if (user.walletMsj === "ok") {
-      for (let j in user.total.data) {
-        coins.push(user.total.data[j]);
+  if (user) {
+    if (Object.keys(user).length > 0) {
+      if (user.walletMsj === "ok") {
+        for (let j in user.total.data) {
+          coins.push(user.total.data[j]);
+        }
       }
     }
   }
@@ -28,7 +30,7 @@ const ProtectedAdminRoute = ({ component: Component, ...rest }) => {
       />
     );
   } else {
-    return <Redirect to={`/login`} />;
+    return <Redirect to={`/`} />;
   }
 };
 

@@ -12,26 +12,32 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: "wrap",
   },
   margin: {
-    margin: theme.spacing(1),
+    marginLeft: theme.spacing(2),
   },
 }));
 
 const AddWallet = () => {
   const classes = useStyles();
-  const [wallet, setWallet] = useState({
+  let initialState = {
     wallet_coint: "",
     wallet_name: "",
-  });
+  };
+  let [wallet, setWallet] = useState(initialState);
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const clearState = () => {
+    setWallet(initialState);
+  };
   const onChange = (e) => {
     e.preventDefault();
     setWallet({ ...wallet, [e.target.name]: e.target.value });
   };
 
-  const createWallet = () => {
+  const createWallet = (e) => {
+    e.preventDefault();
     dispatch(addWallet(wallet.wallet_name, wallet.wallet_coint, history));
+    clearState();
   };
   return (
     <form className={classes.root}>
@@ -40,6 +46,7 @@ const AddWallet = () => {
         id="custom-css-standard-input"
         label="Wallet Name"
         name="wallet_name"
+        value={wallet.wallet_name}
         onChange={(e) => onChange(e)}
       />
       <TextField
@@ -47,6 +54,7 @@ const AddWallet = () => {
         id="custom-css-standard-input"
         label="Bill"
         name="wallet_coint"
+        value={wallet.wallet_coint}
         onChange={(e) => onChange(e)}
       />
       <Button

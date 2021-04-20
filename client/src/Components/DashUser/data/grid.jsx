@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import NotWallet from "../NotWallet";
+import AddWallet from "../CreateWallet";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,10 +27,10 @@ const useStyles = makeStyles((theme) => ({
 
 const GridDash = ({ user, coins }) => {
   const classes = useStyles();
-  console.log(user, "****", coins);
   let estructure = ["Id", "Wallet", "Balance"];
   return (
     <div className={classes.root}>
+      {}
       <Grid container spacing={5}>
         {coins.length > 0
           ? estructure.map((item) => {
@@ -54,7 +55,9 @@ const GridDash = ({ user, coins }) => {
                   </Grid>
                   <Grid item xs={4}>
                     <Paper className={classes.paper}>
-                      {Math.floor(item.balance / (1000000 * 1000000))}
+                      {item.balance === 0
+                        ? 0
+                        : Math.floor(item.balance / (1000000 * 1000000))}
                     </Paper>
                   </Grid>
                 </>
@@ -76,6 +79,11 @@ const GridDash = ({ user, coins }) => {
           <NotWallet />
         )}
       </Grid>
+      <br />
+      <br />
+      <br />
+
+      <AddWallet />
     </div>
   );
 };

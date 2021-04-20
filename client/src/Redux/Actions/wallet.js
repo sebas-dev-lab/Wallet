@@ -21,11 +21,11 @@ export const addWallet = (wallet_name, wallet_coint, history) => async (
       config
     );
     if (data.wallet) {
+      dispatch(getCurrentUser(token, history));
       dispatch({
         type: actionTypes.CREATE_WALLET,
         wallet: data.wallet,
       });
-      dispatch(getCurrentUser(token, history));
     }
   } catch (e) {
     console.error(e);
