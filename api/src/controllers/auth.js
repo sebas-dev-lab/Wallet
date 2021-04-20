@@ -19,21 +19,11 @@ exports.singUp = async (req, res) => {
       return res.status(404).josn({ msj: "Data required" });
     }
 
-    // const newWallet = new Wallet({
-    //   wallet_name: "ETH",
-    //   wallet_coin: [
-    //     "0x4de921237198b305d6d46a9f8c41a87625dfa6dc",
-    //     "0x73c26dd2a28dd303aa2b9f339c664246e6331d8b",
-    //   ],
-    // });
-
     const newUser = new User({
       userName,
       password,
-      // wallet: newWallet,
     });
     newUser.password = await newUser.encrypt(password);
-    // await newWallet.save();
     await newUser.save();
     const user = await User.findOne({ userName: userName });
     if (!user) {
