@@ -1,5 +1,10 @@
 import axios from "axios";
+import Swal from "sweetalert2";
 import * as actionTypes from "./ActionTypes.js";
+import loginAlert from "../../services/alerts/login";
+import singUpAlert from "../../services/alerts/singUp";
+import logoutAlert from "../../services/alerts/logout";
+
 const URL = "http://localhost:4000";
 
 export const singUp = (userName, password, history) => async (dispatch) => {
@@ -21,8 +26,10 @@ export const singUp = (userName, password, history) => async (dispatch) => {
         user: data.user,
       });
       history.push("/singin");
+      singUpAlert("ok");
     } else {
       console.log("no se pudo registrar");
+      singUpAlert("error");
     }
   } catch (e) {
     dispatch({
@@ -30,6 +37,7 @@ export const singUp = (userName, password, history) => async (dispatch) => {
       message: "SingUp Error",
     });
     console.error(e);
+    singUpAlert("error");
   }
 };
 
@@ -53,8 +61,10 @@ export const login = (userName, password, history) => async (dispatch) => {
       });
       localStorage.setItem("token", data.token);
       history.push("/dash");
+      loginAlert("ok");
     } else {
       console.log("no se pudo loguear");
+      loginAlert("error");
     }
   } catch (e) {
     dispatch({
@@ -62,6 +72,7 @@ export const login = (userName, password, history) => async (dispatch) => {
       message: "Login user error",
     });
     console.error(e);
+    loginAlert("error");
   }
 };
 
@@ -70,7 +81,7 @@ export const getCurrentUser = (token, history) => async (dispatch) => {
     headers: { "x-access-token": token },
   };
   const { data } = await axios.get(`${URL}/user`, config);
-
+  console.log(data);
   if (data && data.type !== "expired") {
     dispatch({
       type: actionTypes.CURRENT_USER,
@@ -96,16 +107,18 @@ export const verifySession = (history) => (dispatch) => {
 };
 
 export const logout = (history) => async (dispatch) => {
-  const { token } = localStorage;
-  await axios
-    .post(`${URL}/auth/logout`, {
-      token: token,
-    })
-    .then((res) => {
-      dispatch({
-        type: actionTypes.LOGOUT_USER,
+  logoutAlert().then(async (res) => {
+    const { token } = localStorage;
+    await axios
+      .post(`${URL}/auth/logout`, {
+        token: token,
+      })
+      .then((res) => {
+        dispatch({
+          type: actionTypes.LOGOUT_USER,
+        });
+        localStorage.removeItem("token");
+        history.push("/");
       });
-      localStorage.removeItem("token");
-      history.push("/");
-    });
+  });
 };

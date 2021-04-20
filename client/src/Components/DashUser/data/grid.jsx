@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
 const GridDash = ({ user, coins }) => {
   const classes = useStyles();
   let estructure = ["Id", "Wallet", "Balance"];
+  console.log(user);
   return (
     <div className={classes.root}>
       {}
@@ -49,9 +50,7 @@ const GridDash = ({ user, coins }) => {
                     <Paper className={classes.paper}>{idx}</Paper>
                   </Grid>
                   <Grid item xs={4}>
-                    <Paper className={classes.paper}>
-                      {item.account.slice(0, 10) + "..."}
-                    </Paper>
+                    <Paper className={classes.paper}>{item.account}</Paper>
                   </Grid>
                   <Grid item xs={4}>
                     <Paper className={classes.paper}>
@@ -71,7 +70,7 @@ const GridDash = ({ user, coins }) => {
             </Grid>
             <Grid item xs={6}>
               <Paper className={classes.paper}>
-                {Math.floor(user.total.total_2 / (1000000 * 1000000))}
+                {Math.floor(user.total.total_2)}
               </Paper>
             </Grid>
           </>

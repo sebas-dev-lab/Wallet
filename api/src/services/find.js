@@ -11,7 +11,9 @@ module.exports = {
       case "id":
         find_item = await User.findOne({ _id: item });
         return find_item;
-
+      case "all":
+        find_item = await User.find();
+        return find_item;
       default:
         break;
     }
@@ -25,6 +27,7 @@ module.exports = {
       case "id":
         find_item = await Wallet.findOne({ _id: item });
         return find_item;
+
       default:
         break;
     }

@@ -1,5 +1,6 @@
 const axios = require("axios");
 const config = require("../../config");
+const { findUser } = require("./find");
 
 module.exports = {
   balance: async (APIREC) => {
@@ -47,4 +48,5 @@ module.exports = {
       return false;
     }
   },
+  controlWalletUser: async () => {},
 };

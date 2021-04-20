@@ -1,6 +1,7 @@
 import axios from "axios";
 import * as actionTypes from "./ActionTypes";
 import { getCurrentUser, verifySession } from "./auth";
+import walletAlert from "../../services/alerts/wallet";
 
 const URL = "http://localhost:4000";
 
@@ -27,8 +28,9 @@ export const addWallet = (wallet_name, wallet_coint, history) => async (
         type: actionTypes.CREATE_WALLET,
         wallet: data.wallet,
       });
+      walletAlert("ok");
     } else if (data.walletVerify === false) {
-      alert("Wallet no existe");
+      walletAlert("error");
     }
   } catch (e) {
     console.error(e);
@@ -36,5 +38,6 @@ export const addWallet = (wallet_name, wallet_coint, history) => async (
       type: actionTypes.ERROR_CREATE_WALLET,
       message: "Error",
     });
+    walletAlert("error");
   }
 };
