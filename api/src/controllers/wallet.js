@@ -15,7 +15,9 @@ exports.postWallet = async (req, res) => {
     const path = resolvePath(coin);
     const controlWallet = await verifyCoins(path);
     if (controlWallet === false) {
-      return res.status(404).json({ msj: "Not exist", walletVerify: false });
+      return res
+        .status(206)
+        .json({ msj: "Wallet does not exist", walletVerify: false });
     }
     const neWallet = new Wallet({
       wallet_name: wallet_name,

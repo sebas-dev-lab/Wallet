@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
-import { withStyles, makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import { useDispatch } from "react-redux";
 import { addWallet } from "../../../Redux/Actions/wallet";
@@ -63,7 +63,7 @@ const AddWallet = () => {
         color="primary"
         disableElevation
       >
-        Crear!
+        Agregar!
       </Button>
     </form>
   );

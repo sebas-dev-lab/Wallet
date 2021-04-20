@@ -19,7 +19,6 @@ const Home = () => {
   }, []);
   let nav = false;
 
-  console.log(data);
   if (data) {
     if (data.id) {
       nav = nav_type.ok;
