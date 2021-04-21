@@ -1,9 +1,12 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import NotWallet from "../NotWallet";
 import AddWallet from "../CreateWallet";
+import DeleteSweepIcon from "@material-ui/icons/DeleteSweep";
+import { delWallet } from "../../../Redux/Actions/wallet";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,17 +29,35 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const GridDash = ({ user, coins }) => {
+  const dispatch = useDispatch();
   const classes = useStyles();
-  let estructure = ["Id", "Wallet", "Balance"];
-  console.log(user);
+  let estructure = ["Id", "Wallet", "Balance", "Acciones"];
+
+  const deleteWallet = (id) => {
+    dispatch(delWallet(id));
+  };
+
   return (
     <div className={classes.root}>
       {}
-      <Grid container spacing={5}>
+      <Grid container spacing={4}>
         {coins.length > 0
           ? estructure.map((item) => {
               return (
-                <Grid item xs={4}>
+                <Grid
+                  item
+                  xs={
+                    item === "Id"
+                      ? 1
+                      : item === "Wallet"
+                      ? 5
+                      : item === "Balance"
+                      ? 4
+                      : item === "Acciones"
+                      ? 1
+                      : null
+                  }
+                >
                   <Paper className={classes.paper}>{item}</Paper>
                 </Grid>
               );
@@ -46,10 +67,10 @@ const GridDash = ({ user, coins }) => {
           ? coins.map((item, idx) => {
               return (
                 <>
-                  <Grid item xs={4}>
+                  <Grid item xs={1}>
                     <Paper className={classes.paper}>{idx}</Paper>
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid item xs={5}>
                     <Paper className={classes.paper}>{item.account}</Paper>
                   </Grid>
                   <Grid item xs={4}>
@@ -57,6 +78,12 @@ const GridDash = ({ user, coins }) => {
                       {item.balance === 0
                         ? 0
                         : Math.floor(item.balance / (1000000 * 1000000))}
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={1}>
+                    <Paper className={classes.paper}>
+                      {" "}
+                      <DeleteSweepIcon />
                     </Paper>
                   </Grid>
                 </>

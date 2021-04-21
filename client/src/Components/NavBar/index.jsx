@@ -13,6 +13,8 @@ import { useHistory } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
 import DashboardIcon from "@material-ui/icons/Dashboard";
+import AccountBalanceWalletIcon from "@material-ui/icons/AccountBalanceWallet";
+import AddWalletModal from "../DashUser/CreateWallet/modal";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,9 +32,14 @@ const NavBar = ({ type }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
+  const [open, setOpen] = React.useState(false);
 
   const logoutUser = () => {
     dispatch(logout(history));
+  };
+
+  const handleModal = () => {
+    setOpen(!open);
   };
 
   return (
@@ -79,6 +86,15 @@ const NavBar = ({ type }) => {
                   <DashboardIcon />
                 </IconButton>
               </Link>
+              <Button onClick={handleModal}>
+                <IconButton
+                  edge="start"
+                  className={classes.menuButton}
+                  aria-label="menu"
+                />
+                <AccountBalanceWalletIcon />
+              </Button>
+              <AddWalletModal open={open} setOpen={setOpen} />
             </>
           )}
           <Link to="/">

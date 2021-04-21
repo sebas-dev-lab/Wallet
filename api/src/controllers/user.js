@@ -36,7 +36,6 @@ exports.findUser = async (req, res) => {
       total: total,
       walletMsj,
     };
-    console.log(send_user);
     return res.status(200).json({ msj: "ok", send_user });
   } catch (e) {
     console.error(e);

@@ -6,6 +6,7 @@ import {
   CURRENT_USER,
   NOT_CURRENT_USER,
   LOGOUT_USER,
+  DELETE_WALLET,
 } from "../Actions/ActionTypes";
 
 let initialState = {
@@ -50,6 +51,7 @@ const authReducers = (state = initialState, action) => {
         ...state,
         message: action.message,
       };
+
     default:
       return state;
   }

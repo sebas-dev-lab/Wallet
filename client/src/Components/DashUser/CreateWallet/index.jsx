@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AddWallet = () => {
+const AddWallet = ({ handleClose }) => {
   const classes = useStyles();
   let initialState = {
     wallet_coint: "",
@@ -38,6 +38,7 @@ const AddWallet = () => {
     e.preventDefault();
     dispatch(addWallet(wallet.wallet_name, wallet.wallet_coint, history));
     clearState();
+    handleClose();
   };
   return (
     <form className={classes.root}>

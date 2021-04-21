@@ -81,7 +81,6 @@ export const getCurrentUser = (token, history) => async (dispatch) => {
     headers: { "x-access-token": token },
   };
   const { data } = await axios.get(`${URL}/user`, config);
-  console.log(data);
   if (data && data.type !== "expired") {
     dispatch({
       type: actionTypes.CURRENT_USER,
@@ -108,17 +107,21 @@ export const verifySession = (history) => (dispatch) => {
 
 export const logout = (history) => async (dispatch) => {
   logoutAlert().then(async (res) => {
-    const { token } = localStorage;
-    await axios
-      .post(`${URL}/auth/logout`, {
-        token: token,
-      })
-      .then((res) => {
-        dispatch({
-          type: actionTypes.LOGOUT_USER,
+    if (res.isConfirmed) {
+      const { token } = localStorage;
+      await axios
+        .post(`${URL}/auth/logout`, {
+          token: token,
+        })
+        .then((res) => {
+          dispatch({
+            type: actionTypes.LOGOUT_USER,
+          });
+          localStorage.removeItem("token");
+          Swal.fire("Ok", "Sesión finalizada", "success");
+
+          history.push("/");
         });
-        localStorage.removeItem("token");
-        history.push("/");
-      });
+    }
   });
 };
