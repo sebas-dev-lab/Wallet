@@ -10,13 +10,17 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     flexWrap: "wrap",
+    alignItems: "center",
   },
   margin: {
     marginLeft: theme.spacing(2),
   },
+  button: {
+    margin: theme.spacing(2),
+  },
 }));
 
-const AddWallet = ({ handleClose }) => {
+const AddWallet = () => {
   const classes = useStyles();
   let initialState = {
     wallet_coint: "",
@@ -38,7 +42,6 @@ const AddWallet = ({ handleClose }) => {
     e.preventDefault();
     dispatch(addWallet(wallet.wallet_name, wallet.wallet_coint, history));
     clearState();
-    handleClose();
   };
   return (
     <form className={classes.root}>
@@ -63,6 +66,7 @@ const AddWallet = ({ handleClose }) => {
         variant="contained"
         color="primary"
         disableElevation
+        className={classes.button}
       >
         Agregar!
       </Button>

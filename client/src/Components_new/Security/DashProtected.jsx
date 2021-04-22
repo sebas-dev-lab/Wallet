@@ -3,7 +3,12 @@ import { Redirect, Route, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { verifySession } from "../../Redux/Actions/auth";
 
-const ProtectedAdminRoute = ({ component: Component, ...rest }) => {
+const ProtectedAdminRoute = ({
+  component: Component,
+  toggle,
+  themeState,
+  ...rest
+}) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector((store) => store.auth.user);
@@ -25,7 +30,14 @@ const ProtectedAdminRoute = ({ component: Component, ...rest }) => {
       <Route
         {...rest}
         render={(props) => {
-          return <Component user={user} coins={coins} />;
+          return (
+            <Component
+              user={user}
+              coins={coins}
+              toggle={toggle}
+              themeState={themeState}
+            />
+          );
         }}
       />
     );
