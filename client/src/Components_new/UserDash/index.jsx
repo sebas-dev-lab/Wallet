@@ -67,7 +67,10 @@ export default function Dashboard({ toggle, themeState, user, coins }) {
                 />
               </Route>
               <Route exact path="/dash/user">
-                <UserData />
+                <UserData
+                  classes={classes}
+                  fixedHeightPaper={fixedHeightPaper}
+                />
               </Route>
             </Grid>
           </Container>

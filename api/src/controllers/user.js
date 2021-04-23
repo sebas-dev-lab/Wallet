@@ -42,6 +42,42 @@ exports.findUser = async (req, res) => {
   }
 };
 
+exports.userData = async (req, res) => {
+  try {
+    const user = await findUser(req.userId, "id");
+    if (!user) {
+      return res.status(404).json({ msj: "Could no be found" });
+    }
+    const send_user = {
+      id: user._id,
+      userName: user.userName,
+    };
+    return res.status(200).json({ msj: "ok", user: send_user, dataUser: true });
+  } catch (e) {
+    console.error(e);
+    return res.status(500).json({ msj: "Internal error" });
+  }
+};
+
+exports.updateUserData = async (req, res) => {
+  try {
+    const { userName, password } = req.body;
+    const user = await findUser(req.userId, "id");
+    if (!user) {
+      return res.status(404).json({ msj: "User could not be found" });
+    }
+
+    user.password = await user.encrypt(password);
+    user.userName = userName;
+
+    user.save();
+    return res.status(201).json({ msj: "ok" });
+  } catch (e) {
+    console.error(e);
+    return res.status(500).json({ msj: "Internal error" });
+  }
+};
+
 exports.deleteUser = async (req, res) => {
   try {
     const { id } = req.params;

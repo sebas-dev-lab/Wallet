@@ -49,6 +49,10 @@ export const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
+  avatar: {
+    margin: theme.spacing(-1),
+    maxWidth: "4em",
+  },
   drawerPaperClose: {
     overflowX: "hidden",
     transition: theme.transitions.create("width", {

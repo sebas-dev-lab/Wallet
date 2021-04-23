@@ -10,6 +10,12 @@ const userController = require("../controllers/user");
 // Get user logued by token
 router.get("/", verifyFn, userController.findUser);
 
+// Get user logued data
+router.get("/user", verifyFn, userController.userData);
+
+// Update user data
+router.put("/", verifyFn, userController.updateUserData);
+
 //If you have an admin you can use with params - create verify_role middleware
 router.get("/:id", userController.findUser);
 

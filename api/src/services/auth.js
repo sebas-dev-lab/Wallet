@@ -5,10 +5,12 @@ const config = require("../../config");
 // ** IMPORT FUNCTION SERVICE
 const { findUser } = require("./find");
 
+const expire = 60 * 60 * 24;
+
 module.exports = {
   createToken: (user) => {
     const token = jwt.sign({ id: user._id }, config.SECRET, {
-      expiresIn: "120s",
+      expiresIn: expire,
     });
     return token;
   },

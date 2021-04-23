@@ -12,7 +12,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Box from "@material-ui/core/Box";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { logout } from "../../../Redux/Actions/auth";
-
+import logo from "../../public/logo_2.png";
 const DashNavBar = ({
   toggle,
   themeState,
@@ -48,7 +48,7 @@ const DashNavBar = ({
           noWrap
           className={classes.title}
         >
-          Y-WApp
+          <img src={logo} className={classes.avatar} />
         </Typography>
         <Box ml={2}>
           <Button onClick={logoutUser}>

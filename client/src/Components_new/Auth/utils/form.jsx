@@ -1,9 +1,9 @@
 import React from "react";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
-import Link from "@material-ui/core/Link";
 import { Copyright } from "../../../services/copyright";
 import { Fields } from "./fields.jsx";
+import { NavLink } from "react-router-dom";
 
 const AuthForm = ({ useStyles, type }) => {
   const classes = useStyles();
@@ -13,16 +13,16 @@ const AuthForm = ({ useStyles, type }) => {
         {Fields(type)}
         <Grid container>
           <Grid item justify="space-between" xs>
-            <Link href="#">
+            <NavLink to="#">
               {type === "login" ? "¿Perdiste tu contraseña?" : null}
-            </Link>
+            </NavLink>
           </Grid>
           <Grid item>
-            <Link href={type === "singup" ? "/singin" : "/singup"}>
+            <NavLink to={type === "singup" ? "/singin" : "/singup"}>
               {type === "singup"
                 ? "¿Ya tienes cuenta?"
                 : "¿Todavía no tienes una cuenta?"}
-            </Link>
+            </NavLink>
           </Grid>
         </Grid>
         <Box mt={5}>

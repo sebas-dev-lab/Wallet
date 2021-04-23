@@ -20,4 +20,8 @@ export const useStyles = makeStyles((theme) => ({
   toolbar: {
     minHeight: 75,
   },
+  avatar: {
+    margin: theme.spacing(0),
+    maxWidth: "5em",
+  },
 }));

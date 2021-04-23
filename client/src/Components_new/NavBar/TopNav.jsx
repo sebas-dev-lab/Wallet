@@ -11,12 +11,14 @@ import {
 } from "@material-ui/core";
 import PersonIcon from "@material-ui/icons/Person";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
+import HomeIcon from "@material-ui/icons/Home";
 import {
   Menu as MenuIcon,
   Sun as LightIcon,
   Moon as DarkIcon,
 } from "react-feather";
 import { useStyles } from "./style/navStyle";
+import logo from "./logo_1.png";
 
 const TopNav = ({ toggle, themeState, type }) => {
   const classes = useStyles();
@@ -24,39 +26,25 @@ const TopNav = ({ toggle, themeState, type }) => {
   return (
     <AppBar className={classes.root}>
       <Toolbar className={classes.toolbar}>
+        <img src={logo} className={classes.avatar} />
+
         <Hidden lgUp>
           <IconButton color="inherit">
             <MenuIcon />
           </IconButton>
         </Hidden>
         <Box ml={2} flexGrow={1} />
-        {!type ? (
-          <>
-            <Box ml={2}>
-              <Link to="/singin">
-                <IconButton
-                  edge="start"
-                  className={classes.menuButton}
-                  aria-label="menu"
-                >
-                  <PersonIcon />
-                </IconButton>
-              </Link>
-            </Box>
-            <Box ml={2}>
-              <Link to="/singup">
-                <IconButton
-                  edge="start"
-                  className={classes.menuButton}
-                  aria-label="menu"
-                >
-                  <PersonAddIcon />
-                </IconButton>
-              </Link>
-            </Box>
-          </>
-        ) : null}
-
+        <Box ml={2}>
+          <Link to="/">
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              aria-label="menu"
+            >
+              <HomeIcon />
+            </IconButton>
+          </Link>
+        </Box>
         <Box ml={2}>
           <Tooltip
             title={themeState.mode !== "LIGHT" ? "Light mode" : "Dark mode"}
