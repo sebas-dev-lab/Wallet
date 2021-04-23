@@ -18,7 +18,7 @@ exports.postWallet = async (req, res) => {
       return res.status(206).json({
         msj: "Wallet does not exist",
         walletVerify: false,
-        exist: fasle,
+        exist: false,
       });
     }
 
