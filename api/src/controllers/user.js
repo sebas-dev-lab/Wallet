@@ -64,14 +64,16 @@ exports.updateUserData = async (req, res) => {
     const { userName, password } = req.body;
     const user = await findUser(req.userId, "id");
     if (!user) {
-      return res.status(404).json({ msj: "User could not be found" });
+      return res
+        .status(404)
+        .json({ msj: "User could not be found", uptdate: false });
     }
 
     user.password = await user.encrypt(password);
     user.userName = userName;
 
     user.save();
-    return res.status(201).json({ msj: "ok" });
+    return res.status(201).json({ msj: "ok", update: true });
   } catch (e) {
     console.error(e);
     return res.status(500).json({ msj: "Internal error" });

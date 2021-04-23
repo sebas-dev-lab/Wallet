@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Grid, Paper, makeStyles, Button } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
-import { getUserData } from "../../../Redux/Actions/user";
+import { getUserData, updateUserData } from "../../../Redux/Actions/user";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,6 +46,7 @@ const UserData = ({ classes, fixedHeightPaper }) => {
   const sendData = (e) => {
     e.preventDefault();
     console.log(userData);
+    dispatch(updateUserData(userData.userName, userData.password));
     onEdit(e);
   };
 

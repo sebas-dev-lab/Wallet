@@ -20,3 +20,26 @@ export const getUserData = () => async (dispatch) => {
     console.error(e);
   }
 };
+
+export const updateUserData = (userName, password) => async (dispatch) => {
+  try {
+    const { token } = localStorage;
+    const config = {
+      headers: { "x-access-token": token },
+    };
+    const { data } = await axios.put(
+      `${URL}/user`,
+      {
+        userName: userName,
+        password: password,
+      },
+      config
+    );
+    if (data && data.update) {
+      dispatch(getUserData());
+      alert("ok");
+    }
+  } catch (e) {
+    console.error(e);
+  }
+};
