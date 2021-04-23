@@ -9,48 +9,8 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import eth from "../../../../node_modules/cryptocurrency-icons/svg/icon/eth.svg";
-import dai from "../../../../node_modules/cryptocurrency-icons/svg/icon/dai.svg";
-
-const cryptos = [
-  {
-    name: "ETH",
-    icon: eth,
-  },
-  {
-    name: "DAI",
-    icon: dai,
-  },
-];
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-    flexWrap: "wrap",
-    alignItems: "center",
-  },
-  margin: {
-    marginLeft: theme.spacing(2),
-  },
-  button: {
-    margin: theme.spacing(2),
-  },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-    maxWidth: 300,
-  },
-  chips: {
-    display: "flex",
-    flexWrap: "wrap",
-  },
-  chip: {
-    margin: 2,
-  },
-  noLabel: {
-    marginTop: theme.spacing(3),
-  },
-}));
+import { useStyles } from "./styles/ui.js";
+import { cryptos } from "./utils/cryptos";
 
 const AddWallet = ({ handleClose }) => {
   const classes = useStyles();
@@ -82,7 +42,7 @@ const AddWallet = ({ handleClose }) => {
   return (
     <form className={classes.root}>
       <FormControl className={classes.formControl}>
-        <InputLabel id="demo-simple-select-label">Age</InputLabel>
+        <InputLabel id="demo-simple-select-label">Crypto</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"

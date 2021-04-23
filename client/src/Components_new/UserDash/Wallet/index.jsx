@@ -4,62 +4,11 @@ import Paper from "@material-ui/core/Paper";
 import DashTable from "./Table";
 import AddWallet from "./CreateWallet";
 import TotalTable from "./TotalTable";
-import { Button, makeStyles } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
-import { useSpring, animated } from "react-spring/web.cjs"; // web.cjs is required for IE 11 support
-import PropTypes from "prop-types";
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    padding: theme.spacing(2),
-    display: "flex",
-    overflow: "auto",
-    flexDirection: "column",
-  },
-  modal: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  paper_modal: {
-    backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-}));
-
-const Fade = React.forwardRef(function Fade(props, ref) {
-  const { in: open, children, onEnter, onExited, ...other } = props;
-  const style = useSpring({
-    from: { opacity: 0 },
-    to: { opacity: open ? 1 : 0 },
-    onStart: () => {
-      if (open && onEnter) {
-        onEnter();
-      }
-    },
-    onRest: () => {
-      if (!open && onExited) {
-        onExited();
-      }
-    },
-  });
-
-  return (
-    <animated.div ref={ref} style={style} {...other}>
-      {children}
-    </animated.div>
-  );
-});
-
-Fade.propTypes = {
-  children: PropTypes.element,
-  in: PropTypes.bool.isRequired,
-  onEnter: PropTypes.func,
-  onExited: PropTypes.func,
-};
+import Fade from "./utils/fade";
+import { useStyles } from "./styles/ui.js";
 
 const WalletDash = ({ user, coins, fixedHeightPaper }) => {
   const classes = useStyles();
