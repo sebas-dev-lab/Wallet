@@ -16,7 +16,7 @@ exports.singUp = async (req, res) => {
     const { userName, password } = req.body;
     console.log(userName, password);
     if (!userName || !password) {
-      return res.status(404).josn({ msj: "Data required" });
+      return res.status(404).json({ msj: "Data required" });
     }
 
     const newUser = new User({

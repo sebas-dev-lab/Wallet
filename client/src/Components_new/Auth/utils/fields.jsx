@@ -46,21 +46,20 @@ export const Fields = (type) => {
       passwordError: status.passwordStatus,
       passwoedConfirmationError: status.confirmationStatus,
     });
-    if (
-      !status.userNameStatus &&
-      !status.confirmationStatus &&
-      !status.passwordStatus
-    ) {
-    }
 
     if (type === "login") {
       singin.userName = singin.userName.toLowerCase();
       dispatch(login(singin.userName, singin.password, history));
     } else {
       register.userName = register.userName.toLowerCase();
-      dispatch(singUp(register.userName, register.password, history));
+      if (register.password === register.passwordConfirmation) {
+        console.log("entro");
+        dispatch(singUp(register.userName, register.password, history));
+      }
     }
   };
+
+  console.log(register);
 
   return (
     <>

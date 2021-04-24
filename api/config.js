@@ -4,4 +4,5 @@ module.exports = {
   DATABASE: process.env.DATABASE,
   SECRET: process.env.SECRET,
   APIETH: process.env.URL,
+  CLIENT: process.env.CLIENT_URL,
 };

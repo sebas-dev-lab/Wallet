@@ -1,4 +1,4 @@
 module.exports = {
-  PORT: 4000,
-  URL: "http://localshost",
+  URL: process.env.REACT_APP_API_URL,
+  PORT: process.env.REACT_APP_API_PORT,
 };

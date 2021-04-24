@@ -4,13 +4,12 @@ import * as actionTypes from "./ActionTypes.js";
 import loginAlert from "../../services/alerts/login";
 import singUpAlert from "../../services/alerts/singUp";
 import logoutAlert from "../../services/alerts/logout";
-
-const URL = "http://localhost:4000";
-
+import { URL, PORT } from "../../services/config";
+const API = `${URL}:${PORT}`;
 export const singUp = (userName, password, history) => async (dispatch) => {
   try {
     const { data } = await axios.post(
-      `${URL}/auth`,
+      `${API}/auth`,
       {
         userName,
         password,
@@ -20,7 +19,6 @@ export const singUp = (userName, password, history) => async (dispatch) => {
       }
     );
     if (data) {
-      console.log(data);
       dispatch({
         type: actionTypes.SINGUP_USER,
         user: data.user,
@@ -43,8 +41,10 @@ export const singUp = (userName, password, history) => async (dispatch) => {
 
 export const login = (userName, password, history) => async (dispatch) => {
   try {
+    console.log(API);
+
     const { data } = await axios.post(
-      `${URL}/auth/login`,
+      `${API}/auth/login`,
       {
         userName: userName,
         password: password,
@@ -80,7 +80,7 @@ export const getCurrentUser = (token, history) => async (dispatch) => {
   let config = {
     headers: { "x-access-token": token },
   };
-  const { data } = await axios.get(`${URL}/user`, config);
+  const { data } = await axios.get(`${API}/user`, config);
   if (data && data.type !== "expired") {
     dispatch({
       type: actionTypes.CURRENT_USER,
@@ -110,7 +110,7 @@ export const logout = (history) => async (dispatch) => {
     if (res.isConfirmed) {
       const { token } = localStorage;
       await axios
-        .post(`${URL}/auth/logout`, {
+        .post(`${API}/auth/logout`, {
           token: token,
         })
         .then((res) => {

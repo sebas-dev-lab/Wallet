@@ -3,8 +3,8 @@ import deleteUser from "../../services/alerts/deleteUser.js";
 import updateUser from "../../services/alerts/updateUser.js";
 import * as actionTypes from "./ActionTypes.js";
 import Swal from "sweetalert2";
-
-const URL = "http://localhost:4000";
+import { URL, PORT } from "../../services/config";
+const API = `${URL}:${PORT}`;
 
 export const getUserData = () => async (dispatch) => {
   try {
@@ -12,7 +12,7 @@ export const getUserData = () => async (dispatch) => {
     const config = {
       headers: { "x-access-token": token },
     };
-    const { data } = await axios.get(`${URL}/user/user`, config);
+    const { data } = await axios.get(`${API}/user/user`, config);
     if (data && data.dataUser) {
       dispatch({
         type: actionTypes.USER_DATA,
@@ -31,7 +31,7 @@ export const updateUserData = (userName, password) => async (dispatch) => {
       headers: { "x-access-token": token },
     };
     const { data } = await axios.put(
-      `${URL}/user`,
+      `${API}/user`,
       {
         userName: userName,
         password: password,
@@ -54,7 +54,7 @@ export const byeUser = (id, history) => (dispatch) => {
       const config = {
         headers: { "x-access-token": token },
       };
-      const { data } = await axios.delete(`${URL}/user/${id}`, config);
+      const { data } = await axios.delete(`${API}/user/${id}`, config);
       if (data && data.delete === true) {
         dispatch({
           type: actionTypes.DELETE_USER,
