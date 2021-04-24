@@ -7,6 +7,7 @@ import {
   NOT_CURRENT_USER,
   LOGOUT_USER,
   DELETE_WALLET,
+  DELETE_USER,
 } from "../Actions/ActionTypes";
 
 let initialState = {
@@ -37,6 +38,11 @@ const authReducers = (state = initialState, action) => {
         message: action.message,
       };
     case LOGOUT_USER:
+      return {
+        ...state,
+        user: {},
+      };
+    case DELETE_USER:
       return {
         ...state,
         user: {},

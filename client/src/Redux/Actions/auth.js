@@ -119,8 +119,6 @@ export const logout = (history) => async (dispatch) => {
           });
           localStorage.removeItem("token");
           Swal.fire("Ok", "Sesión finalizada", "success");
-
-          history.push("/");
         });
     }
   });

@@ -1,4 +1,4 @@
-import { USER_DATA } from "../Actions/ActionTypes";
+import { DELETE_USER, USER_DATA } from "../Actions/ActionTypes";
 
 const initialStae = {
   user: {},

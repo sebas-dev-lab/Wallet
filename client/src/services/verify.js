@@ -26,9 +26,9 @@ module.exports = {
       passwordStatus = true;
       errorPassword = "Debe tener más de 6 caracteres";
     } else if (typeof data !== "undefined") {
-      if (!data.match(/^[a-zA-Z]+$/)) {
+      if (!data.match(/^[0-9a-zA-Z]+$/)) {
         passwordStatus = true;
-        errorPassword = "¡¡Solo letras!!";
+        errorPassword = "¡¡Solo letras y números!!";
       }
     }
 
@@ -38,7 +38,6 @@ module.exports = {
     let confirmationStatus = false;
     let errorConfirmation = "";
     if (!data) {
-      console.log("ando");
       confirmationStatus = true;
       errorConfirmation = "Campo obligatorio";
     } else if (data !== data_2) {
@@ -58,5 +57,11 @@ module.exports = {
       error = setup.passwoedConfirmationError;
     }
     return error;
+  },
+  simpleErrorStyle: (password, confirmPassword) => {
+    if (password === confirmPassword) {
+      return true;
+    }
+    return false;
   },
 };

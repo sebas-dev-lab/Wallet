@@ -83,6 +83,7 @@ exports.updateUserData = async (req, res) => {
 exports.deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
+    console.log(id);
     const user = await findUser(id, "id");
     if (!user) {
       return res.status(404).json({ msj: "Could not be found" });
@@ -97,7 +98,7 @@ exports.deleteUser = async (req, res) => {
     if (control) {
       return res.status(404).json({ msj: "Could not be deleted" });
     }
-    return res.status(200).json({ msj: "ok" });
+    return res.status(200).json({ msj: "ok", delete: true });
   } catch (e) {
     return res.satus(500).json({ msj: "Server error" });
   }

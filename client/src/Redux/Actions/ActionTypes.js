@@ -8,6 +8,7 @@ export const LOGOUT_USER = "LOGOUT_USER";
 // USER
 export const USER_DATA = "USER_DATA";
 export const UPDATE_USER_DATA = "UPDATE_USER_DATA";
+export const DELETE_USER = "DELETE_USER";
 // WALLET
 export const CREATE_WALLET = "CREATE_WALLET";
 export const DELETE_WALLET = "DELETE_WALLET";
