@@ -12,11 +12,6 @@ const AuthForm = ({ useStyles, type }) => {
       <form className={classes.margin} noValidate>
         {Fields(type)}
         <Grid container>
-          <Grid item justify="space-between" xs>
-            <NavLink to="#">
-              {type === "login" ? "¿Perdiste tu contraseña?" : null}
-            </NavLink>
-          </Grid>
           <Grid item>
             <NavLink to={type === "singup" ? "/singin" : "/singup"}>
               {type === "singup"
