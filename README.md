@@ -8,6 +8,8 @@
 
     /* Variables de entorno */
 
+    Crear 2 archivos .env
+
     .env.local  -> Variables de entorno para local y se caragan al realizar "npm start"
     .env -> Variables de entorno al pasar a producción "npm run build"
 
@@ -35,6 +37,8 @@
 
     /* Variables de entorno */
 
+        Crear archivo .env
+        
         PORT=4000    -> Puerto
         DATABASE=mongodb://localhost ->Dirección de base de datos
         SECRET=faysertoken -> Frase secreta JWT
@@ -44,4 +48,4 @@
 
     NOTA: Las variables de entorno se recogen en el archivo config.js
 
-    
+
