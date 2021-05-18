@@ -6,8 +6,8 @@ export const Copyright = () => {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="https://github.com/sebas-dev-lab">
-        Victor Sebastián Lescano
+      <Link color="inherit">
+        Coin Tracker
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
