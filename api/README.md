@@ -1,13 +1,14 @@
 ## API - WALLET
 
 
-*** Descripcion ***
+** Descripcion **
 
 - Colecciones (2): User - WALLET
 
-- Se requiere tener instalado MongoDb y NodeJs
+```
+[x] Se requiere tener instalado 'MongoDb' y 'NodeJs'
 
-- Instalación: 
+[x] Instalación: 
     
     1- npm install sobre la carpeta de "api"
     2- variables de entorno: (.env)
@@ -19,7 +20,8 @@
                 CLIENT_URL=http://localhost:3000 
     3-  npm start
 
-- Acceso a Documentación (Swagger): http://localhost:4000 (si es que no se modifican las variables de entorno)
+[x] Acceso a Documentación (Swagger): http://localhost:4000 (si es que no se modifican las variables de entorno)
+```
 
 - Nota (Swagger): Verificar en package.json que la versión de swagger-jsdoc es 6.0.0, de lo contrario podría dar error
 
