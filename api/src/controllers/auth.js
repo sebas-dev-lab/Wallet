@@ -16,7 +16,7 @@ exports.singUp = async (req, res) => {
     const { userName, password } = req.body;
     console.log(userName, password);
     if (!userName || !password) {
-      return res.status(404).json({ msj: "Data required" });
+      return res.status(400).json({ msj: "Data required" });
     }
 
     const newUser = new User({
@@ -27,7 +27,7 @@ exports.singUp = async (req, res) => {
     await newUser.save();
     const user = await User.findOne({ userName: userName });
     if (!user) {
-      return res.status(400).json({ msj: "User could not be created" });
+      return res.status(404).json({ msj: "User could not be created" });
     }
     return res.status(201).json({ msj: "ok", auth: true });
   } catch (e) {
@@ -40,11 +40,11 @@ exports.login = async (req, res) => {
   try {
     const { userName, password } = req.body;
     if (!userName || !password) {
-      return res.status(404).json({ msj: "Data required" });
+      return res.status(400).json({ msj: "Data required" });
     }
     const user = await findUser(userName, "userName");
     if (!user) {
-      return res.status(400).json({ msj: "User could not be found" });
+      return res.status(404).json({ msj: "User could not be found" });
     }
     const isValid = await user.validatePassword(password);
     if (!isValid) {
@@ -66,11 +66,11 @@ exports.logout = async (req, res) => {
   try {
     const { token } = req.body;
     if (!token) {
-      return res.status(404).json({ msj: "required token" });
+      return res.status(400).json({ msj: "required token" });
     }
     const { userStatus, tokenStatus } = await saveTokenExpired(token);
     if (!userStatus || !tokenStatus) {
-      return res.status(400).json({ msj: "could not be loguot" });
+      return res.status(404).json({ msj: "could not be loguot" });
     }
     return res.status(200).json({ msj: "ok logout" });
   } catch (e) {

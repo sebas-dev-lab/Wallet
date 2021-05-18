@@ -39,6 +39,7 @@ exports.findUser = async (req, res) => {
     return res.status(200).json({ msj: "ok", send_user });
   } catch (e) {
     console.error(e);
+    return res.status(500).json({msj:'Internal Error'})
   }
 };
 

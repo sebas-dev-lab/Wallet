@@ -48,4 +48,8 @@
 
     NOTA: Las variables de entorno se recogen en el archivo config.js
 
+- Acceso a Documentación (Swagger): http://localhost:4000 (si es que no se modifican las variables de entorno)
+
+- Nota (Swagger): Verificar en package.json que la versión de swagger-jsdoc es 6.0.0, de lo contrario podría dar error
+
 

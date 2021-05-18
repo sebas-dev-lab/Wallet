@@ -8,6 +8,10 @@ const config = require("./config");
 const router = require("./src/routes/index.js");
 const { uniqueDB } = require("./src/services/ttl");
 
+// Docs config
+const swaggerUi = require("swagger-ui-express");
+const swaggerConfing_users = require("./config/swagger.js");
+
 // Server
 const app = express();
 app.set("port", config.PORT || 3001);
@@ -28,7 +32,13 @@ app.use(
 // Create unique TTL
 // uniqueDB();
 
+
 // Routes
 app.use(router);
+
+// Swagger config
+app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerConfing_users));
+
+
 
 module.exports = app;

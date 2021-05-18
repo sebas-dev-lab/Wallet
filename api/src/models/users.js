@@ -1,5 +1,6 @@
 const { Schema, model } = require("mongoose");
 const bcrypt = require("bcryptjs");
+require('./Docs/auth')
 
 const userSchema = new Schema({
   userName: {
