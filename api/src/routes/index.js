@@ -5,12 +5,12 @@ const authRouter = require("./auth");
 const walletRouter = require("./wallet");
 const userRouter = require("./user");
 // Auth Routes
-router.use("/auth", authRouter);
+router.use("/dev/api/auth", authRouter);
 
 // User routes
-router.use("/user", userRouter);
+router.use("/dev/api/user", userRouter);
 
 // wallet routes
-router.use("/wallet", walletRouter);
+router.use("/dev/api/wallet", walletRouter);
 
 module.exports = router;

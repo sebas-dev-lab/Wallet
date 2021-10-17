@@ -1,14 +1,17 @@
 const mongoose = require("mongoose");
 const config = require("./config");
 
-const { DATABASE } = config;
+const { DATABASE, MONGODB_DB} = config;
 
-mongoose.connect(DATABASE, {
-  useCreateIndex: true,
-  useNewUrlParser: true,
-  useFindAndModify: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false,
-});
+const MONGODB_URI = `mongodb://${DATABASE}/${MONGODB_DB}`
+
+
+mongoose
+  .connect(MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+  })
 
 module.exports = mongoose;

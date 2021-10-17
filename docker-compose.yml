@@ -1,0 +1,59 @@
+version: "3.8"
+
+services:
+  apiwallet:
+    build:
+      context: ./api
+    container_name: apiwallet
+    hostname: apiwallet
+    restart: always
+    environment:
+      - PORT=${PORT}
+      - SECRET=faysertoken
+      - URL=${URL}
+      - PORT_CLIENTS=${PORT_CLIENTS}
+      - CLIENT_URL=${CLIENT_URL}
+      - DATABASE=${DATABASE}
+      - MONGODB_DB=${MONGODB_DB}
+      - NODE_ENV=${NODE_ENV}
+      - DEPLOY=${DEPLOY}
+    depends_on:
+      - mongodb
+    links:
+      - mongodb
+    ports:
+      - 3001:3001
+    volumes:
+      - ./api:/opt/app
+
+
+  mongodb:
+    image: mongo
+    restart: always
+    ports:
+      - "27018:2017"
+    container_name: mongodb
+    logging:
+      driver: none
+
+
+  client:
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - REACT_APP_API_URL_S3=${REACT_APP_API_URL_S3}
+      - REACT_APP_API_URL=${REACT_APP_API_URL}
+      - REACT_APP_API_PORT=${REACT_APP_API_PORT}
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: client
+    ports:
+      - "80:80"
+    depends_on:
+      - apiwallet
+    networks: 
+      - nginx-proxy 
+      - default
+
+networks:
+  nginx-proxy:

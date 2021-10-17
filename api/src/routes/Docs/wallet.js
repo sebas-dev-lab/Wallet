@@ -10,7 +10,7 @@
 
 /**
  * @swagger
- * /wallet:
+ * /dev/api/wallet:
  *   post:
  *     summary: Create user wallet
  *     description: "Se crea billetera. Se presentan dos controles: si existe realmente la billetera (api-ehereum) y si la billetera se encuentra asociada a otro usuario. Si caulquiera de los dos casos es verdad se devuelve un json con los siguientes campos- msj(string) walletVerify(boolean - si es false retorna 206 y no se crea la billetera) exist(boolean - si es true implica que la billetera pertenese a otro usuario). Si el proceso fue exitoso entonces se devuelve un json- msj(string-ok) wallet(array de wallets) walletVerify(boolean-true)"
@@ -50,7 +50,7 @@
 
 /**
  * @swagger
- * /wallet:
+ * /dev/api/wallet:
  *   get:
  *     summary: Get user wallets
  *     description: "Obtiene las billeteras del usuario. Se requiere pasar el token por headers"
@@ -83,7 +83,7 @@
 
 /**
  * @swagger
- * /wallet/{wallet_coin}:
+ * /dev/api/wallet/{wallet_coin}:
  *   delete:
  *     summary: Delete wallet data
  *     description: "Elimina una billetera en particular. Se requiere pasar por params wallet_coin referido a la dirección de la billetera (ethereum). Pasar el token por header. Si el proceso fue exitoso se devuelve un json-  msj(strin-ok) del(boolean-true), en caso contrario del(boolean-false)"

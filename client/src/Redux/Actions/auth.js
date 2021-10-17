@@ -5,7 +5,10 @@ import loginAlert from "../../services/alerts/login";
 import singUpAlert from "../../services/alerts/singUp";
 import logoutAlert from "../../services/alerts/logout";
 import { URL, PORT } from "../../services/config";
-const API = `${URL}:${PORT}`;
+const API = `${URL}${PORT?`:${PORT}`:''}/dev/api`;
+
+
+
 export const singUp = (userName, password, history) => async (dispatch) => {
   try {
     const { data } = await axios.post(
@@ -13,9 +16,6 @@ export const singUp = (userName, password, history) => async (dispatch) => {
       {
         userName,
         password,
-      },
-      {
-        withCredentials: true,
       }
     );
     if (data) {
@@ -48,11 +48,9 @@ export const login = (userName, password, history) => async (dispatch) => {
       {
         userName: userName,
         password: password,
-      },
-      {
-        withCredentials: true,
       }
     );
+    console.log(data,'data')
     if (data) {
       dispatch(getCurrentUser(data.token, history));
       dispatch({

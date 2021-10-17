@@ -4,9 +4,8 @@ import { getCurrentUser, verifySession } from "./auth";
 import walletAlert from "../../services/alerts/wallet";
 import delWalletAlert from "../../services/alerts/delWallet";
 import Swal from "sweetalert2";
-
-const URL = "http://localhost:4000";
-
+import { URL, PORT } from "../../services/config";
+const API = `${URL}${PORT?`:${PORT}`:''}/dev/api`;
 export const addWallet = (wallet_name, wallet_coint, history) => async (
   dispatch
 ) => {
@@ -16,7 +15,7 @@ export const addWallet = (wallet_name, wallet_coint, history) => async (
       headers: { "x-access-token": token },
     };
     const { data } = await axios.post(
-      `${URL}/wallet`,
+      `${API}/wallet`,
       {
         wallet_name: wallet_name,
         wallet_coint: wallet_coint,
@@ -56,7 +55,7 @@ export const delWallet = (account, history) => async (dispatch) => {
         let config = {
           headers: { "x-access-token": token },
         };
-        const { data } = await axios.delete(`${URL}/wallet/${account}`, config);
+        const { data } = await axios.delete(`${API}/wallet/${account}`, config);
         if (data) {
           if (data.del === true) {
             dispatch({

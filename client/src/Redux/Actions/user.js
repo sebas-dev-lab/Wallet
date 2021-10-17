@@ -4,7 +4,7 @@ import updateUser from "../../services/alerts/updateUser.js";
 import * as actionTypes from "./ActionTypes.js";
 import Swal from "sweetalert2";
 import { URL, PORT } from "../../services/config";
-const API = `${URL}:${PORT}`;
+const API = `${URL}${PORT?`:${PORT}`:''}/dev/api`;
 
 export const getUserData = () => async (dispatch) => {
   try {

@@ -10,7 +10,7 @@
 
 /**
  * @swagger
- * /user:
+ * /dev/api/user:
  *   get:
  *     summary: Get user data
  *     description: "Obtiene los siguientes datos del usuario logueado:  user_id, wallet, total, walletMsj. Se requiere pasar el token de login por headers. Tener presente=> x-acces-token : token - NOTA: No se devuelve userName, password ni tokenExpired"
@@ -41,7 +41,7 @@
 
 /**
  * @swagger
- * /user/user:
+ * /dev/api/user/user:
  *   get:
  *     summary: Get basic user data
  *     description: "Trae unicamente los siguientes datos del usuario=>  user_id y userName. Requiere pasar por headers el token=> x-access-token : token"
@@ -74,7 +74,7 @@
 
 /**
  * @swagger
- * /user:
+ * /dev/api/user:
  *   put:
  *     summary: Update User
  *     description: "Actualiza los datos del usuario - userName y password - los cuales deben ser enviados por body. Pasar token por header. Es recomendable pasar ambos datos por mas que solo se requiera actualizar uno solo."
@@ -117,7 +117,7 @@
 
 /**
  * @swagger
- * /user/{id}:
+ * /dev/api/user/{id}:
  *   delete:
  *     summary: Delete User
  *     description: "Eliminar usuario por completo. Al hacerlo, se eliminan las wallet del usuario. Requiere pasar por params el id del usuario y por headers el token"

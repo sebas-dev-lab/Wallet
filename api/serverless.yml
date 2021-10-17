@@ -1,0 +1,32 @@
+service: wallet
+custom:
+  secrets: ${file(secrets.json)}
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: dev
+  region: us-west-2
+  environment:
+    PORT: ${self:custom.secrets.PORT}
+    DATABASE: ${self:custom.secrets.DATABASE}
+    SECRET: ${self:custom.secrets.SECRET}
+    URL: ${self:custom.secrets.URL}
+    PORT_CLIENTS: ${self:custom.secrets.[PORT_CLIENTS]}
+    CLIENT_URL: ${self:custom.secrets.CLIENT_URL}
+    NODE_ENV: ${self:custom.secrets.NODE_ENV}
+functions:
+  index:
+    handler: index.handler
+    events:
+      - http:
+          path: /
+          method: ANY
+          cors: true
+      - http:
+          path: /{proxy+}
+          method: ANY
+          cors: true
+      - http:
+          path: /api/auth
+          method: POST
+          cors: true
